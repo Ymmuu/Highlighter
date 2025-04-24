@@ -1,0 +1,77 @@
+{
+  "name": "personnummer-highlighter",
+  "displayName": "Personnummer Highlighter",
+  "description": "Lyssnar på .txt och .json och hittar personnummer",
+  "version": "1.1.0",
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "mocha --parallel --experimental-modules"
+  },
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Personnummer Highlighter Settings",
+      "properties": {
+        "personnummer-highlighter.regex": {
+          "type": "string",
+          "default": "\\b(19|20)?\\d{6}[- ]?\\d{4}\\b",
+          "description": "Regex som används för att hitta t.ex. personnummer (\\b(19|20)?\\d{6}[- ]?\\d{4}\\b)"
+        },
+        "personnummer-highlighter.logMatches": {
+          "type": "boolean",
+          "default": true,
+          "description": "Logga alla matchningar till Debug Console."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.highlightPersonnummer",
+        "title": "Highlight Matchningar"
+      },
+      {
+        "command": "extension.highlightPersonnummerNewTab",
+        "title": "Hitta Matchningar + Ny Flik"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+            "command": "extension.highlightPersonnummer",
+            "when": "editorLangId == 'plaintext' || editorLangId == 'json' || editorLangId == 'pnr'",
+            "group": "navigation"
+        },
+        {
+            "command": "extension.highlightPersonnummerNewTab",
+            "when": "editorLangId == 'plaintext' || editorLangId == 'json' || editorLangId == 'pnr'",
+            "group": "navigation"
+        }
+    ],
+    "explorer/context": [
+        {
+            "command": "extension.highlightPersonnummer",
+            "when": "resourceExtname == .txt || resourceExtname == .json || resourceExtname == .pnr",
+            "group": "navigation"
+        },
+        {
+            "command": "extension.highlightPersonnummerNewTab",
+            "when": "resourceExtname == .txt || resourceExtname == .json || resourceExtname == .pnr",
+            "group": "navigation"
+        }
+    ]
+    }
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.82.0",
+    "chai": "^5.1.2",
+    "esm": "^3.2.25",
+    "mocha": "^10.8.2"
+  }
+}
