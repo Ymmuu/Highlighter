@@ -17,3 +17,7 @@ Thumbs.db
 *.vsix
 
 .fake
+
+# ignore SSH keys
+highlight
+highlight.pub
