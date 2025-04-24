@@ -1,8 +1,12 @@
 {
-  "name": "personnummer-highlighter",
-  "displayName": "Personnummer Highlighter",
-  "description": "Lyssnar på .txt och .json och hittar personnummer",
-  "version": "1.1.0",
+  "name": "highlighter",
+  "displayName": "Highlighter",
+  "description": "Listens to .txt and .json files and highlights matches based on your regex setting",
+  "version": "1.0.3",
+  "repository": {
+     "type": "git",
+     "url": "https://github.com/Ymmuu/Highlighter.git"
+   },
   "engines": {
     "vscode": "^1.82.0"
   },
@@ -12,66 +16,65 @@
   "main": "./extension.js",
   "type": "commonjs",
   "scripts": {
-    "test": "mocha --parallel --experimental-modules"
+    "test": "mocha --parallel"
   },
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "Personnummer Highlighter Settings",
+      "title": "Highlighter Settings",
       "properties": {
-        "personnummer-highlighter.regex": {
+        "highlighter.regex": {
           "type": "string",
-          "default": "\\b(19|20)?\\d{6}[- ]?\\d{4}\\b",
-          "description": "Regex som används för att hitta t.ex. personnummer (\\b(19|20)?\\d{6}[- ]?\\d{4}\\b)"
+          "default": "\\bDude\\b",
+          "description": "Regex used to find matches (case-insensitive by default)"
         },
-        "personnummer-highlighter.logMatches": {
+        "highlighter.logMatches": {
           "type": "boolean",
           "default": true,
-          "description": "Logga alla matchningar till Debug Console."
+          "description": "Log all matches to the Debug Console"
         }
       }
     },
     "commands": [
       {
-        "command": "extension.highlightPersonnummer",
-        "title": "Highlight Matchningar"
+        "command": "extension.highlightMatches",
+        "title": "Highlight Matches"
       },
       {
-        "command": "extension.highlightPersonnummerNewTab",
-        "title": "Hitta Matchningar + Ny Flik"
+        "command": "extension.findMatchesNewTab",
+        "title": "Find Matches + New Tab"
       }
     ],
     "menus": {
       "editor/context": [
         {
-            "command": "extension.highlightPersonnummer",
-            "when": "editorLangId == 'plaintext' || editorLangId == 'json' || editorLangId == 'pnr'",
-            "group": "navigation"
+          "command": "extension.highlightMatches",
+          "when": "editorLangId == 'plaintext' || editorLangId == 'json'",
+          "group": "navigation"
         },
         {
-            "command": "extension.highlightPersonnummerNewTab",
-            "when": "editorLangId == 'plaintext' || editorLangId == 'json' || editorLangId == 'pnr'",
-            "group": "navigation"
+          "command": "extension.findMatchesNewTab",
+          "when": "editorLangId == 'plaintext' || editorLangId == 'json'",
+          "group": "navigation"
         }
-    ],
-    "explorer/context": [
+      ],
+      "explorer/context": [
         {
-            "command": "extension.highlightPersonnummer",
-            "when": "resourceExtname == .txt || resourceExtname == .json || resourceExtname == .pnr",
-            "group": "navigation"
+          "command": "extension.highlightMatches",
+          "when": "resourceExtname == .txt || resourceExtname == .json",
+          "group": "navigation"
         },
         {
-            "command": "extension.highlightPersonnummerNewTab",
-            "when": "resourceExtname == .txt || resourceExtname == .json || resourceExtname == .pnr",
-            "group": "navigation"
+          "command": "extension.findMatchesNewTab",
+          "when": "resourceExtname == .txt || resourceExtname == .json",
+          "group": "navigation"
         }
-    ]
+      ]
     }
   },
   "devDependencies": {
     "@types/vscode": "^1.82.0",
     "chai": "^5.1.2",
-    "esm": "^3.2.25",
     "mocha": "^10.8.2"
   }
 }
